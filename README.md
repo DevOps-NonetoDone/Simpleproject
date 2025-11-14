@@ -242,5 +242,50 @@ You have built a complete CI/CD pipeline:
 This is a production-style pipeline suitable for static websites, HTML apps, frontend projects, and more.
 
 ---
+✅ How Jenkins Works With Your Setup
+1️⃣ You push code to GitHub
+
+Example: change index.html
+
+Commit + push → git push origin master
+
+2️⃣ Jenkins sees the GitHub Webhook (or you click "Build Now")
+
+If webhook is configured: build starts automatically
+
+If not: you manually start the job
+
+3️⃣ Jenkins pulls your repo
+
+JenkinsFile sits inside your repo
+
+Jenkins first checks out the repo
+
+Then reads JenkinsFile
+
+4️⃣ JenkinsFile controls everything
+
+Jenkins runs stage-by-stage:
+
+Checkout SCM
+
+Deploy to EC2 using SCP
+
+(optional) test or notify
+
+5️⃣ After Jenkins completes
+
+Updated files are copied to EC2
+
+Nginx serves the updated website automatically
+
+No restart needed
+
+---
+✔ Jenkins always runs the JenkinsFile first
+
+It interprets JenkinsFile
+→ then executes the pipeline steps
+→ then deploys to EC2
 
 
