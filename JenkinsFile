@@ -1,29 +1,50 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Deploy to EC2 (direct)') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
-                    bat """
-                        echo === Deploy starting ===
-                        echo Workspace: %WORKSPACE%
-                        REM copy all workspace files to EC2 web root
-                        scp -i "%SSH_KEY%" -o StrictHostKeyChecking=no -r "%WORKSPACE%\\*" ubuntu@15.206.157.95:/var/www/html/
-                    """
-                }
-            }
-        }
+  stages {
+    stage('Checkout Code') {
+      steps {
+        checkout scm
+      }
     }
 
-    post {
-        success { echo "Deployment Successful!" }
-        failure { echo "Deployment Failed — check console output" }
+    stage('Deploy to EC2 (direct)') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+          bat """
+            echo === Deploy starting ===
+            echo Workspace: %WORKSPACE%
+            echo Securing temporary SSH key file: %SSH_KEY%
+
+            REM Remove inherited ACLs so key is not world-readable
+            icacls "%SSH_KEY%" /inheritance:r
+
+            REM Give Read permission to the Jenkins process user (USERNAME) and SYSTEM
+            icacls "%SSH_KEY%" /grant:r "%USERNAME%:R" || echo Grant to %USERNAME% failed
+            icacls "%SSH_KEY%" /grant:r "SYSTEM:F" || echo Grant to SYSTEM failed
+
+            REM Remove BUILTIN\\Users entry if present (ignore errors)
+            icacls "%SSH_KEY%" /remove "BUILTIN\\Users" || echo Remove BUILTIN\\Users failed
+
+            REM Make file read-only as an extra protection
+            attrib +R "%SSH_KEY%" || echo attrib failed
+
+            echo Now running scp to copy workspace to EC2 webroot
+            scp -i "%SSH_KEY%" -o StrictHostKeyChecking=no -r "%WORKSPACE%\\*" ubuntu@15.206.157.95:/var/www/html/
+
+            echo === Deploy finished ===
+          """
+        }
+      }
     }
+  }
+
+  post {
+    success {
+      echo 'Deployment Successful!'
+    }
+    failure {
+      echo 'Deployment Failed — check console output for details.'
+    }
+  }
 }
