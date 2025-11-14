@@ -1,8 +1,181 @@
 <!doctype html>
-<html>
-  <head><meta charset="utf-8"/><title>My Simple Site</title></head>
-  <body>
-    <h1>Hello from EC2</h1>
-    <p>Updated: 2025-11-14</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Umesh — Portfolio</title>
+  <meta name="description" content="Portfolio of Umesh: DevOps & QA enthusiast. Projects, skills and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.04);
+      --radius:16px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071029 0%,var(--bg) 100%);color:#e6eef8}
+    a{color:var(--accent);text-decoration:none}
+    .container{max-width:1100px;margin:32px auto;padding:28px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#60a5fa);color:#052022;font-weight:700}
+    nav a{margin-left:18px;color:var(--muted);font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:center;margin-top:28px}
+    .intro h1{margin:0;font-size:clamp(28px,4vw,44px);line-height:1.02}
+    .intro p{color:var(--muted);margin-top:12px;max-width:68ch}
+    .cta{margin-top:18px;display:flex;gap:12px}
+    .btn{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#02202a;padding:10px 16px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    .avatar{width:100%;height:320px;border-radius:12px;background:linear-gradient(135deg,#0ea5a6,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#02202a}
+    .profile-card h3{margin:12px 0 6px}
+    .muted{color:var(--muted);font-size:14px}
+
+    section{margin-top:32px}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .skill{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .bar{height:8px;background:var(--glass);border-radius:999px;overflow:hidden;margin-left:12px;flex:1}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#60a5fa)}
+
+    .projects .project{display:flex;gap:12px;align-items:flex-start}
+    .project .thumb{width:84px;height:64px;border-radius:8px;background:linear-gradient(135deg,#60a5fa,#7c3aed);display:grid;place-items:center;font-weight:700}
+    .project p{margin:6px 0;color:var(--muted);font-size:14px}
+
+    footer{margin-top:48px;padding:18px;border-radius:12px;background:transparent;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .profile-card{order:-1}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">UA</div>
+        <div>
+          <div style="font-weight:700">Umesh Aveti</div>
+          <div class="muted" style="font-size:13px">DevOps & QA Enthusiast</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="intro">
+          <h1>Hi — I'm <span style="color:var(--accent)">Umesh</span>. I build reliable pipelines, automate test flows, and keep production calm.</h1>
+          <p>I love turning manual work into automated, repeatable systems. My focus areas: CI/CD with Jenkins, infrastructure as code, containerization, and test automation using Tosca and shell scripting.</p>
+          <div class="cta">
+            <a class="btn" href="#contact">Contact me</a>
+            <a class="btn ghost" href="#projects">See projects</a>
+          </div>
+
+          <section id="about">
+            <h2 style="margin-top:22px">About</h2>
+            <p class="muted">I have experience building pipelines, configuring Nginx, deploying web apps to cloud VMs, and writing automation scripts. I enjoy learning new tools and improving deployment reliability.</p>
+          </section>
+
+          <section id="projects" class="projects">
+            <h2 style="margin-top:18px">Selected projects</h2>
+            <div class="cards">
+              <div class="card project">
+                <div class="thumb">WEB</div>
+                <div>
+                  <strong>Simple Nginx Website + Jenkins CI</strong>
+                  <p>Automated build and deployment pipeline that takes code from Git to an EC2 instance running Nginx using a Jenkinsfile.</p>
+                  <div class="muted" style="font-size:13px">Tools: Jenkins • Nginx • Git</div>
+                </div>
+              </div>
+
+              <div class="card project">
+                <div class="thumb">TF</div>
+                <div>
+                  <strong>Terraform + VS Code integration</strong>
+                  <p>Infrastructure as code workspace with reusable modules and editor integration for linting and formatting.</p>
+                  <div class="muted" style="font-size:13px">Tools: Terraform • VS Code</div>
+                </div>
+              </div>
+
+              <div class="card project">
+                <div class="thumb">TOS</div>
+                <div>
+                  <strong>Test automation with Tosca</strong>
+                  <p>Modular test cases, data-driven suites and CI integration for nightly runs.</p>
+                  <div class="muted" style="font-size:13px">Tools: Tosca • CI</div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </div>
+
+        <aside class="profile-card">
+          <div class="avatar">U</div>
+          <h3>Umesh Aveti</h3>
+          <div class="muted">Location: India • Open to opportunities</div>
+
+          <section id="skills" style="margin-top:14px">
+            <h4>Skills</h4>
+            <div class="skill"><div>Jenkins</div><div class="bar"><i style="width:86%"></i></div></div>
+            <div class="skill"><div>Tosca</div><div class="bar"><i style="width:78%"></i></div></div>
+            <div class="skill"><div>Shell scripting</div><div class="bar"><i style="width:82%"></i></div></div>
+            <div class="skill"><div>Terraform</div><div class="bar"><i style="width:68%"></i></div></div>
+
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <a class="btn" href="mailto:umesh@example.com">Email</a>
+              <a class="btn ghost" href="#">Resume</a>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="cards" style="margin-top:12px">
+          <div class="card">
+            <strong>Get in touch</strong>
+            <p class="muted">Email: <a href="mailto:umesh@example.com">umesh@example.com</a></p>
+            <p class="muted">LinkedIn: <a href="#">linkedin.com/in/umesh</a></p>
+          </div>
+
+          <div class="card">
+            <strong>Quick message</strong>
+            <form onsubmit="alert('Message sent (demo)');return false;">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <input placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+                <input type="email" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+                <textarea placeholder="Message" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea>
+                <button class="btn" type="submit">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© <strong>Umesh Aveti</strong> — Built with ❤️</div>
+      <div class="muted">Designed for demo • Customize as you like</div>
+    </footer>
+  </div>
+</body>
 </html>
