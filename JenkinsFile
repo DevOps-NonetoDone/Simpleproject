@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent (credentials: ['ec2-ssh-key']) {
+                    sh '''
+                        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@<EC2_PUBLIC_IP>:/var/www/html/
+                    '''
+                }
+            }
+        }
+    }
+}
+
