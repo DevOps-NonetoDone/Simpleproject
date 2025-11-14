@@ -8,15 +8,22 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy to EC2 (direct)') {
             steps {
-                sshagent (credentials: ['ec2-ssh-key']) {
-                    sh '''
-                        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@<65.2.181.247>:/var/www/html/
-                    '''
+                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                    bat """
+                        echo === Deploy starting ===
+                        echo Workspace: %WORKSPACE%
+                        REM copy all workspace files to EC2 web root
+                        scp -i "%SSH_KEY%" -o StrictHostKeyChecking=no -r "%WORKSPACE%\\*" ubuntu@15.206.157.95:/var/www/html/
+                    """
                 }
             }
         }
     }
-}
 
+    post {
+        success { echo "Deployment Successful!" }
+        failure { echo "Deployment Failed — check console output" }
+    }
+}
