@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sshagent (credentials: ['ec2-ssh-key']) {
                     sh '''
-                        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@<EC2_PUBLIC_IP>:/var/www/html/
+                        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@<65.2.181.247>:/var/www/html/
                     '''
                 }
             }
